@@ -12,18 +12,6 @@ def create_tcp_socket():
     print('Socket created successfully')
     return s
 
-#get host information
-def get_remote_ip(host):
-    print(f'Getting IP for {host}')
-    try:
-        remote_ip = socket.gethostbyname( host )
-    except socket.gaierror:
-        print ('Hostname could not be resolved. Exiting')
-        sys.exit()
-
-    print (f'Ip address of {host} is {remote_ip}')
-    return remote_ip
-
 #send data to server
 def send_data(serversocket, payload):
     print("Sending payload")    
@@ -37,18 +25,16 @@ def send_data(serversocket, payload):
 def main():
     try:
         #define address info, payload, and buffer size
-        host = 'www.google.com'
-        port = 80
+        host = '127.0.0.1'
+        port = 8001
         payload = f'GET / HTTP/1.0\r\nHost: {host}\r\n\r\n'
         buffer_size = 4096
 
-        #make the socket, get the ip, and connect
+        #make the socket
         s = create_tcp_socket()
 
-        remote_ip = get_remote_ip(host)
-
-        s.connect((remote_ip , port))
-        print (f'Socket Connected to {host} on ip {remote_ip}')
+        s.connect((host, port))
+        print (f'Socket Connected to {host}')
         
         #send the data and shutdown
         send_data(s, payload)

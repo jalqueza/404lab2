@@ -17,7 +17,7 @@ def main():
         s.bind((HOST, PORT))
         #set to listening mode
         s.listen(2)
-
+        
         #continuously listen for connections
         while True:
             conn, addr = s.accept()
@@ -25,7 +25,7 @@ def main():
             
             #recieve data, wait a bit, then send it back
             full_data = conn.recv(BUFFER_SIZE)
-            print(full_data)
+            print(f'recived data {full_data}')
             time.sleep(0.5)
             conn.sendall(full_data)
             conn.close()
